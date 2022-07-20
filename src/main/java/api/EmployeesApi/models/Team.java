@@ -6,15 +6,7 @@ import javax.persistence.*;
 public class Team {
     // Primary key
     @Id
-    @SequenceGenerator(
-            name = "employee_sequence",
-            sequenceName = "employee_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "employee_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer teamNo;
 
     // Columns
@@ -24,18 +16,22 @@ public class Team {
     // Constructor
     public Team() { /* Do nothing */ }
 
-    public Team(int teamNo, String teamName) {
+    public Team(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public Team(Integer teamNo, String teamName) {
         teamNo = teamNo;
         teamName = teamName;
     }
 
     // Getter & Setter
-    public int getTeamNo() {
+    public Integer getTeamNo() {
         return teamNo;
     }
 
-    public void setTeamNo(int teamNo) {
-        teamNo = teamNo;
+    public void setTeamNo(Integer teamNo) {
+        this.teamNo = teamNo;
     }
 
     public String getTeamName() {
@@ -43,7 +39,7 @@ public class Team {
     }
 
     public void setTeamName(String teamName) {
-        teamName = teamName;
+        this.teamName = teamName;
     }
 
     // Override

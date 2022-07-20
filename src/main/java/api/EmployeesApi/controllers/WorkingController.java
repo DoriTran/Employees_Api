@@ -1,5 +1,6 @@
 package api.EmployeesApi.controllers;
 
+import api.EmployeesApi.models.Advance;
 import api.EmployeesApi.models.ResponseObject;
 import api.EmployeesApi.models.Working;
 import api.EmployeesApi.models.composite_keys.WorkingKey;
@@ -29,23 +30,21 @@ public class WorkingController {
     // Add new working day to employee
     @PostMapping("/new")
     ResponseEntity<ResponseObject> insertWorking(@RequestBody Working newWorking) {
-        // CheckID
-        Optional<Working> foundWorking = workingsRepository.findById(new WorkingKey(newWorking.getEmployeeNo(), newWorking.getWorkingNo()));
-        return foundWorking.isPresent() ?
-                ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                        new ResponseObject("fail", "Working id of this employee already exist", "")
-                ) :
-                ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("ok", "Add new working to employee successfully", workingsRepository.save(newWorking))
-                );
+        Integer nextWorkingNo = workingsRepository.getMaxWorkingNoByEmployeeNo(newWorking.getEmployeeNo());
+        if (nextWorkingNo != null) newWorking.setWorkingNo(nextWorkingNo + 1);
+        else newWorking.setWorkingNo(1);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Add new working to employee successfully", workingsRepository.save(newWorking))
+        );
     }
 
     // Delete working day
     @DeleteMapping("/delete/profile={employeeNo}/workingNo={workingNo}")
     ResponseEntity<ResponseObject> deleteWorking(@PathVariable("employeeNo") Integer employeeNo, @PathVariable("workingNo") Integer workingNo) {
-        boolean exists = workingsRepository.existsById(new WorkingKey(employeeNo, workingNo));
-        if (exists) {
-            workingsRepository.deleteById(new WorkingKey(employeeNo, workingNo));
+        List<Working> exists = workingsRepository.getWorkingByNo(employeeNo, workingNo);
+        if (exists.size() > 0) {
+            workingsRepository.deleteByNo(employeeNo, workingNo);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Delete working day successfully", "")
             );

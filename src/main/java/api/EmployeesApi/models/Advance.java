@@ -15,15 +15,6 @@ public class Advance {
     private Integer employeeNo;
 
     @Id
-    @SequenceGenerator(
-            name = "product_sequence",
-            sequenceName = "product_sequence",
-            allocationSize = 1 // increment by 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "product_sequence"
-    )
     private Integer advanceNo;
 
     // Columns

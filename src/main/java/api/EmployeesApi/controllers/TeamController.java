@@ -3,6 +3,8 @@ package api.EmployeesApi.controllers;
 import api.EmployeesApi.models.ResponseObject;
 import api.EmployeesApi.models.Team;
 import api.EmployeesApi.repositories.TeamsRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/teams")
 public class TeamController {
+    //private static final Logger logger = LoggerFactory.getLogger(TeamController.class);
     // DI = Dependency Injection
     @Autowired
     private TeamsRepository teamsRepository;
@@ -22,8 +25,8 @@ public class TeamController {
     @GetMapping("/all")
     List<Team> getAllTeams() { return teamsRepository.findAll(); }
 
-    // Insert new employee
-    @PostMapping("/new")
+    // Insert new teams
+    @PostMapping(value = "/new", consumes = "application/json", produces = "application/json")
     ResponseEntity<ResponseObject> insertTeam(@RequestBody Team newTeam) {
         // CheckName
         List<Team> foundTeams = teamsRepository.findByTeamName(newTeam.getTeamName().trim());

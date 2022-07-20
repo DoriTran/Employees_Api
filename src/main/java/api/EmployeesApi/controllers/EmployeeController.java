@@ -45,15 +45,8 @@ public class EmployeeController {
     // Insert new employee
     @PostMapping("/new")
     ResponseEntity<ResponseObject> insertEmployee(@RequestBody Employee newEmployee) {
-        // Check ID
-        Optional<Employee> foundEmployees = employeesRepository.findById(newEmployee.getNo());
-        return foundEmployees.isPresent() ?
-                ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("fail", "Employee id has already exist", "")
-                ) :
-                ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Add new employee successfully", employeesRepository.save(newEmployee))
-                );
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Add new employee successfully", employeesRepository.save(newEmployee))  );
     }
 
     // Update employee

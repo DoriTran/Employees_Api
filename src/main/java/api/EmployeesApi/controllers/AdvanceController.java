@@ -28,23 +28,22 @@ public class AdvanceController {
     // Add new advance day to employee
     @PostMapping("/new")
     ResponseEntity<ResponseObject> insertAdvance(@RequestBody Advance newAdvance) {
-        // CheckID
-        Optional<Advance> foundAdvance = advancesRepository.findById(new AdvanceKey(newAdvance.getEmployeeNo(), newAdvance.getAdvanceNo()));
-        return foundAdvance.isPresent() ?
-                ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                        new ResponseObject("fail", "Advance if of this employee already exist", "")
-                ):
-                ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("ok", "Add new advance to employee successfully", advancesRepository.save(newAdvance))
-                );
+        Integer nextAdvanceNo = advancesRepository.getMaxAdvanceNoByEmployeeNo(newAdvance.getEmployeeNo());
+        if (nextAdvanceNo != null) newAdvance.setAdvanceNo(nextAdvanceNo + 1);
+        else newAdvance.setAdvanceNo(1);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Add new advance to employee successfully", advancesRepository.save(newAdvance))
+        );
     }
 
     // Delete advance day
-    @DeleteMapping("delete/profile={employeeNo}/workingNo={workingNo}")
+    @DeleteMapping("delete/profile={employeeNo}/advanceNo={advanceNo}")
     ResponseEntity<ResponseObject> deleteAdvance(@PathVariable("employeeNo") Integer employeeNo, @PathVariable("advanceNo") Integer advanceNo) {
-        boolean exists = advancesRepository.existsById(new AdvanceKey(employeeNo, advanceNo));
-        if (exists) {
-            advancesRepository.deleteById(new AdvanceKey(employeeNo, advanceNo));
+        List<Advance> exists = advancesRepository.getAdvanceByNo(employeeNo, advanceNo);
+
+        if (exists.size() > 0) {
+            advancesRepository.deleteByNo(employeeNo, advanceNo);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Delete advance day successfully", "")
             );

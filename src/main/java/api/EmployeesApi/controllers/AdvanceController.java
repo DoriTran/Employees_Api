@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/advance")
+@CrossOrigin("*")
 public class AdvanceController {
     // DI = Dependency Injection
     @Autowired

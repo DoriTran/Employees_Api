@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/employees")
+@CrossOrigin("*")
 public class EmployeeController {
     // DI = Dependency Injection
     @Autowired
@@ -40,6 +41,15 @@ public class EmployeeController {
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         new ResponseObject("fail", "Cant find employee has id = " + id, "")
                 );
+    }
+
+    // Get all employees has teamNo
+    @GetMapping("/team={id}")
+    ResponseEntity<ResponseObject> getAllEmployeeByTeamId(@PathVariable Integer id) {
+        List<Employee> foundEmployee = employeesRepository.getAllEmployeesByTeamNo(id);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Query all employee by teamNo", foundEmployee)
+        );
     }
 
     // Insert new employee
@@ -97,5 +107,19 @@ public class EmployeeController {
                     new ResponseObject("fail", "Cant find employee has id = " + id, "")
             );
         }
+    }
+
+    @DeleteMapping("delete/allByArrId")
+    ResponseEntity<ResponseObject> deleteAllEmployeeByArrId(@RequestBody List<Integer> listID) {
+        String messageOk = "Delete employees whose id = ";
+        String messageFail = "Cant find employees whose id = ";
+        for (int i = 0; i < listID.size(); i++) {
+            ResponseEntity<ResponseObject> result = deleteEmployee(listID.get(i));
+            if (result.getBody().getStatus() == "ok") messageOk = messageOk + listID.get(i) + ",";
+            else messageFail = messageFail + listID.get(i) + ",";
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", messageOk + "\n" + messageFail, "")
+        );
     }
 }

@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/working")
+@CrossOrigin("*")
 public class WorkingController {
     // DI = Dependency Injection
     @Autowired

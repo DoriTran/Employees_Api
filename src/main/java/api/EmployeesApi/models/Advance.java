@@ -3,6 +3,7 @@ package api.EmployeesApi.models;
 import api.EmployeesApi.models.composite_keys.AdvanceKey;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class Advance {
 
     // Columns
     @Column(nullable = false)
-    private java.util.Date date;
+    private LocalDate date;
     @Column(nullable = false, length = 20)
     private String money;
 
@@ -27,7 +28,7 @@ public class Advance {
     public Advance() {
     }
 
-    public Advance(Integer employeeNo, Integer advanceNo, Date date, String money) {
+    public Advance(Integer employeeNo, Integer advanceNo, LocalDate date, String money) {
         this.employeeNo = employeeNo;
         this.advanceNo = advanceNo;
         this.date = date;
@@ -51,11 +52,11 @@ public class Advance {
         this.advanceNo = advanceNo;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

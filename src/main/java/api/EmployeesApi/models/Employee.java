@@ -1,5 +1,6 @@
 package api.EmployeesApi.models;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -23,7 +24,7 @@ public class Employee {
     @Column(nullable = false, length = 10)
     private String sex;
     @Column(nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
     @Column(nullable = false, length = 255)
     private String address;
     @Column(nullable = false)
@@ -34,7 +35,7 @@ public class Employee {
     // Constructor
     public Employee() { /* Do nothing */ }
 
-    public Employee(Integer no, Integer teamNo, String fullName, String phone, int age, String sex, Date startDate, String address, double moneyHour) {
+    public Employee(Integer no, Integer teamNo, String fullName, String phone, int age, String sex, LocalDate startDate, String address, double moneyHour) {
         this.no = no;
         this.teamNo = teamNo;
         this.fullName = fullName;
@@ -46,7 +47,7 @@ public class Employee {
         this.moneyHour = moneyHour;
     }
 
-    public Employee(Integer no, Integer teamNo, String fullName, String phone, int age, String sex, Date startDate, String address, double moneyHour, String avatar) {
+    public Employee(Integer no, Integer teamNo, String fullName, String phone, int age, String sex, LocalDate startDate, String address, double moneyHour, String avatar) {
         this.no = no;
         this.teamNo = teamNo;
         this.fullName = fullName;
@@ -108,11 +109,11 @@ public class Employee {
         this.sex = sex;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 

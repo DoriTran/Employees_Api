@@ -48,11 +48,11 @@ public class FileUploadController {
                         return employeesRepository.save(employee);
                     });
 
-            if (oldAvatar != null) {
-                Path storedFilePath = this.storageFolder.resolve(
-                        Paths.get(oldAvatar)).normalize().toAbsolutePath();
-                Files.deleteIfExists(storedFilePath);
-            }
+//            if (oldAvatar != null) {
+//                Path storedFilePath = this.storageFolder.resolve(
+//                        Paths.get(oldAvatar)).normalize().toAbsolutePath();
+//                Files.deleteIfExists(storedFilePath);
+//            }
 
             if (updateEmployee.isPresent()) {
                 return ResponseEntity.status(HttpStatus.OK).body(

@@ -3,6 +3,7 @@ import javax.persistence.*;
 
 import api.EmployeesApi.models.composite_keys.WorkingKey;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class Working {
 
     // Columns
     @Column(nullable = false)
-    private java.util.Date date;
+    private LocalDate date;
     @Column(nullable = false)
     private Double hour;
 
@@ -27,7 +28,7 @@ public class Working {
     public Working() {
     }
 
-    public Working(Integer employeeNo, Integer workingNo, Date date, Double hour) {
+    public Working(Integer employeeNo, Integer workingNo, LocalDate date, Double hour) {
         this.employeeNo = employeeNo;
         this.workingNo = workingNo;
         this.date = date;
@@ -51,11 +52,11 @@ public class Working {
         this.workingNo = workingNo;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

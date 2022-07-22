@@ -28,6 +28,8 @@ public class Employee {
     private String address;
     @Column(nullable = false)
     private double moneyHour;
+    @Column
+    private String avatar;
 
     // Constructor
     public Employee() { /* Do nothing */ }
@@ -42,6 +44,19 @@ public class Employee {
         this.startDate = startDate;
         this.address = address;
         this.moneyHour = moneyHour;
+    }
+
+    public Employee(Integer no, Integer teamNo, String fullName, String phone, int age, String sex, Date startDate, String address, double moneyHour, String avatar) {
+        this.no = no;
+        this.teamNo = teamNo;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.age = age;
+        this.sex = sex;
+        this.startDate = startDate;
+        this.address = address;
+        this.moneyHour = moneyHour;
+        this.avatar = avatar;
     }
 
     // Getter & Setter
@@ -115,6 +130,14 @@ public class Employee {
 
     public void setMoneyHour(double moneyHour) {
         this.moneyHour = moneyHour;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     // Override
